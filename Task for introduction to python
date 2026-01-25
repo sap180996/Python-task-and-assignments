@@ -1,0 +1,27 @@
+# Program for Guess the number
+#
+# import random
+# x = random.randint(1,50)
+# guesses = 5
+# Player =int (input("Enter a number:"))
+# if x==Player:
+#     print("You guessed right")
+# else:
+#     guesses -= 1
+#     print("Try again")
+# if guesses == 0:
+#     print("Thank you for playing")
+
+# Program for scramble word
+
+# import random
+# words = ['python','javascript','java','automation','pytest','guvi','selenium']
+# jumble = random.choice(words)
+# scramble = "".join(jumble)
+# print(scramble)
+# player =input("Guess your answer:")
+# if player == scramble:
+#     print("you scrambled it")
+# else:
+#     print("It is not right")
+
