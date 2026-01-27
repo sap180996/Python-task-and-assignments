@@ -1,0 +1,91 @@
+# 1.To create even and odd  list
+#
+# Given Numbers = [10,501,22,37,100,999,87,351]
+# Even = [10,22,100]
+# Odd = [501,37,999,87,351]
+
+# 2.To create primenumber list and count the numbers
+
+# Givenlist = [10,501,22,37,100,999,87,351]
+# Prime = [501,37,999,87,351]
+# Total = len(Prime)
+# print(Total)
+
+# 3.To Find the happy numbers in given list
+# list = [10,501,22,37,100,999,87,351]
+# import random
+# number = random.choice(list)
+# happy = sum(split(number)*split(number))
+# if happy == 0:
+#     print("The number is happy",number)
+
+# 4.To find sum of first and last digit of an integer
+# value = 214
+# num = str(value)
+# firstdigit = num[0]
+# lastdigit = num[2]
+# print(firstdigit)
+# print(lastdigit)
+# sum = print(int(firstdigit)+int(lastdigit))
+# print(sum)
+
+# 5.To make Rs.10 using given details (Rs.1,Rs.2,Rs.5,10coins)
+# x = 1
+# y = 2
+# z = 5
+# Coin = 10
+# try1 = y*z
+# try2 = x*Coin
+# try3 = Coin
+# print(try1)
+# print(try2)
+# print(try3)
+
+# 6.To find Duplicates in a list
+# list1 = [10,20,30,20,40,50]
+# list2 = [100,200,300,400,100]
+# list3 = [2,4,6,4,8,10]
+# for i in range (len(list1)):
+#     for j in range (i+1,len(list1)):
+#         if list1[i] == list1[j]:
+#             print(list1[i],"is duplicate")
+# for i in range (len(list2)):
+#     for j in range (i+1,len(list2)):
+#         if list2[i] == list2[j]:
+#             print(list2[i],"is duplicate")
+# for i in range (len(list3)):
+#     for j in range (i+1,len(list3)):
+#         if list3[i] == list3[j]:
+#             print(list3[i],"is duplicate")
+
+# 7.To find first non-repeating element in list of integers
+# list = [1,2,3,1,2]
+# x = 0
+# while x<len(list):
+#     Total = list.index[1]
+#     second = list.index[1]+1
+#     if second == 0:
+#         print('list[x]', "is first non-repeating element")
+
+# 8.To find minimum element in sorted list
+# list = [33,10,24,68,92,103,42,115]
+# list.sort()
+# print(list[0])
+
+# 9.To find the triplet whose sum is equal to given value
+# list = [10,20,30,9]
+# Value = 59
+# import random
+# choice = random.sample(list,3)
+# Triplet = sum(choice)
+# if sum(choice) == 59:
+#     print("Triplet is",choice)
+
+# 10.To find the presence of sublist whose sum is equal to zero
+# list = [4,2,-3,1,6]
+# import random
+# sublist = random.sample(list,2)
+# number = sum(sublist)
+# if sum(sublist) == 0:
+#     print("sublist is",sublist)
+
