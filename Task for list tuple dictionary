@@ -1,15 +1,25 @@
 # 1.To create even and odd  list
-#
-# Given Numbers = [10,501,22,37,100,999,87,351]
-# Even = [10,22,100]
-# Odd = [501,37,999,87,351]
+# list = [10,501,22,37,100,999,87,351]
+# Even = []
+# for i in range(0,len(list)):
+#     if list[i]%2==0:
+#         Even.append(list[i])
+#         print("Even numbers are :",Even)
+# Odd = []
+# for i in range(0,len(list)):
+#     if list[i]%2!=0:
+#         Odd.append(list[i])
+#         print("Odd numbers are :",Odd)
 
 # 2.To create primenumber list and count the numbers
-
-# Givenlist = [10,501,22,37,100,999,87,351]
-# Prime = [501,37,999,87,351]
+# list = [10,501,22,37,100,999,87,351]
+# Prime = []
+# for i in range(0,len(list)):
+#     if list[i]%2==1:
+#         Prime.append(list[i])
+#         print("Prime numbers are:",Prime)
 # Total = len(Prime)
-# print(Total)
+# print("Total prime numbers are:",Total)
 
 # 3.To Find the happy numbers in given list
 # list = [10,501,22,37,100,999,87,351]
