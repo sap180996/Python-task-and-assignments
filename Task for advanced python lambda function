@@ -1,0 +1,48 @@
+# Question 1
+# Person = [ {"name":"John","age":25},{"name":"Robert","age":32},{"name":"Sofia","age":12},
+#            {"name":"Bob","age":14},{"name":"Adam","age":30}]
+# children = list(filter(lambda p:p["age"]<18,Person))
+# print("Person under age 18 are",children)
+# newlist = []
+# for p in Person:
+#     if p["age"]>18:
+#         newlist.append(p)
+#         print("Newlist with Person above age 18 are",newlist)
+
+# Question 2
+# from functools import reduce
+# numbers = [10,15,2,7,9,25,32]
+# product = reduce(lambda x, y: x * y, numbers)
+# print(product)
+
+# Question 3
+# numbers = [2,1,4,3,6,5,8,10]
+# squares = [ i**2 for i in numbers if i % 2 == 0]
+# print("squares of even numbers are",squares)
+# even = list(filter(lambda x: x % 2 == 0,numbers))
+# print("Even numbers using lambda fun are",even)
+# newlist = squares[:]
+# print("Newlist with even squares",newlist)
+
+# Question 4
+# a = "Hello World"
+# result = lambda a: a.isnumeric()
+# print(result(a))
+
+# Question 5
+# import datetime
+# period = "2025-2-2"
+# result = lambda x: datetime.datetime.strptime(x, '%Y-%m-%d').date()
+# print(result(period))
+
+# Question 6
+# def fibonacci(n):
+#     if n == 0:
+#         return 0
+#     elif n == 1:
+#         return 1
+#     else:
+#         return fibonacci(n-1) + fibonacci(n-2)
+#
+# result = lambda n: fibonacci(n)
+# print(result(10))
