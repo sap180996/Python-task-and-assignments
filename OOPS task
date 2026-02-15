@@ -1,0 +1,108 @@
+# Problem 1 - Bankaccount
+# class bankaccount:
+#     def  __init__(self,acc_no,balance):
+#         self.acc_no = acc_no
+#         self._balance = balance
+#     def deposit(self):
+#         amount = int(input("Enter your deposit amount: "))
+#         self._balance += amount
+#         print("Your balance is: ",self._balance)
+#     def withdraw(self):
+#         withdraw_amount = int(input("Enter your withdraw amount: "))
+#         if withdraw_amount >=5000:
+#             print("Exceeds the withdraw limit")
+#         else:
+#             self._balance -= withdraw_amount
+#         print("Your balance is: ",self._balance)
+# class savings(bankaccount):
+#     def interest(self,interestrate):
+#         interestrate = float(input("Enter your interestrate: "))
+#         Totalsaving = self._balance * interestrate
+#         self._balance  += Totalsaving
+#         print("Your balance with interest in savings is: ",self._balance)
+# class currentaccount(bankaccount):
+#     def minimumbalance(self):
+#         minimum = 500
+#         if self._balance < minimum:
+#             print("Please have minimum balance in current account")
+#             print("minimum balance required in current account is: ",minimum)
+#         else:
+#             print("Your available balance in current account is: ",self._balance)
+#
+# b = bankaccount(15,9000)
+# b.deposit()
+# b.withdraw()
+# sb = savings(15,9000)
+# sb.interest(0.9)
+# c = currentaccount(15,900)
+# c.minimumbalance()
+
+# Problem 2 - Employee management
+# class Employee:
+#     def __init__(self,name,Basicsalary):
+#         self.name=name
+#         self.Basicsalary=Basicsalary
+#     def calculate_salary(self):
+#         Gross_salary = self.Basicsalary + self.Allowance
+#         Net_salary = Gross_salary - self.Deductions
+#         print(input("enter your category"))
+#         print("Your name:",self.name)
+#         print("Your Net salary is", Net_salary)
+# class Manager(Employee):
+#     def __init__(self,name,Basicsalary):
+#         super().__init__(name,Basicsalary)
+#         self.Allowance = 5000
+#         self.Deductions = 1500
+# class Regular(Employee):
+#     def __init__(self, name, Basicsalary):
+#         super().__init__(name, Basicsalary)
+#         self.Allowance = 1500
+#         self.Deductions = 1000
+# class Contract(Employee):
+#     def __init__(self, name, Basicsalary):
+#         super().__init__(name, Basicsalary)
+#         self.Allowance = 0
+#         self.Deductions = 0
+#
+# m = Manager("John",40000)
+# m.calculate_salary()
+# r = Regular("Sam",30000)
+# r.calculate_salary()
+# c = Contract("Adam",10000)
+# c.calculate_salary()
+
+# Problem 3 - Vehicle rental
+# class Vehicle:
+#     def __init__(self,model,rentalrate):
+#         self.model=model
+#         self.rentalrate=rentalrate
+#     def calculate_rental(self):
+#         self.Baserate = (self.rentalrate*self.days)+self.extracost
+#         Total_rent = self.Baserate+self.taxes
+#         print(input("enter your Vehicle category"))
+#         print("Your rent is", Total_rent)
+# class car(Vehicle):
+#     def __init__(self,model,rentalrate):
+#         super().__init__(model,rentalrate)
+#         self.days = 10
+#         self.extracost = 1000
+#         self.taxes = 0.12
+# class Bike(Vehicle):
+#     def __init__(self,model,rentalrate):
+#         super().__init__(model,rentalrate)
+#         self.days = 5
+#         self.extracost = 500
+#         self.taxes = 0.12
+# class Truck(Vehicle):
+#     def __init__(self,model,rentalrate):
+#         super().__init__(model,rentalrate)
+#         self.days = 3
+#         self.extracost = 2000
+#         self.taxes = 0.12
+#
+# c = car("maruti",0.5)
+# c.calculate_rental()
+# b = Bike("apache",0.3)
+# b.calculate_rental()
+# t = Truck("mahindra",0.4)
+# t.calculate_rental()
