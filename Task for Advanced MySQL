@@ -1,0 +1,75 @@
+-- creating database and tables and inserting values
+-- create database IMDB;
+-- use IMDB;
+
+-- create table movies(
+-- movie_id int primary key auto_increment,
+-- movie_name varchar(50),
+-- artist_name varchar(50),
+-- genre varchar(50)
+-- );
+
+-- insert into movies values
+-- (1,'Rocketry the nambi effect','R.Madhavan','Biographical drama'),
+-- (2,'Dasavataram','Kamalhasan','Action'),
+-- (3,'Badhti ka naam daadhi','Kishore kumar','comedy'),
+-- (4,'Maqbool','Vishal bhardwaj','crime'),
+-- (5,'Whats your Rashee','Priyanka chopra','Romantic');
+
+-- create table artist(
+-- movie_id int,
+-- artist_role varchar(50),
+-- foreign key(
+-- movie_id) references movies(movie_id)
+-- );
+
+-- insert into artist (movie_id,artist_role) values
+-- (1,'Actor'),(1,'Director'),(1,'Producer'),(1,'Writer'),
+-- (2,'Actor'),(2,'Writer'),
+-- (3,'Actor'),(3,'Director'),(3,'Singer'),(3,'Composer'),
+-- (4,'Director'),(4,'Composer'),(4,'Writer'),
+-- (5,'Actor');
+
+-- create table review(
+-- movie_id int,
+-- user_review varchar(500),
+-- rating decimal(3,1),
+-- foreign key(movie_id) references movies(movie_id)
+-- );
+
+-- insert into review (movie_id,user_review,rating) values
+-- (1,'A Passionate tribute from actor','8.7'),
+-- (2,'A masterclass prosthetics','7.2'),
+-- (3,'Its chaotic and funny','6.8'),
+-- (4,'The music haunts as much as story','8.0'),
+-- (5,'Its incredible','4.5');
+
+-- Selecting data from tables
+-- select * from movies;
+-- select * from artist;
+-- select * from review;
+-- select movie_name from movies where genre = 'Action';
+
+-- using built in functions
+-- select count(*) from movies;
+-- select avg(rating) from review;
+-- select min(rating) from review;
+-- select max(rating) from review;
+
+-- select movie_id,artist_role from artist group by movie_id;
+-- select movie_id,artist_role from artist group by movie_id having artist_role ='Director';
+-- select distinct artist_role from artist;
+
+-- Using subquery method
+-- select artist_name from movies where (
+-- select artist_role from artist where artist_role = 'Writer');
+
+-- using inner join
+-- select movies.movie_name,artist.artist_role from movies
+-- inner join artist on movies.movie_id = artist.movie_id;
+
+-- deleting tables and databases
+-- drop table movies;
+-- drop table artist;
+-- drop table review;
+-- drop database IMDB;
