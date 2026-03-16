@@ -1,0 +1,54 @@
+# import time
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+
+# driver = webdriver.Edge()
+# driver.get("https://saucedemo.com")
+# time.sleep(2)
+# print(driver.title)
+# print(driver.current_url)
+# username = driver.find_element(By.ID, "user-name")
+# username.send_keys("standard_user")
+# time.sleep(2)
+# password = driver.find_element(By.ID, "password")
+# password.send_keys("secret_sauce")
+# time.sleep(2)
+# login_button = driver.find_element(By.ID, "login-button")
+# login_button.click()
+# time.sleep(2)
+# page_content = driver.page_source
+# file = open("Webpage_task_11.txt","w",encoding="utf-8")
+# file.write(page_content)
+# file.close()
+# driver.quit()
+#
+# import pytest
+# @pytest.mark.positive
+# def test_valid_login():
+#     driver = webdriver.Edge()
+#     driver .get("https://saucedemo.com")
+#     username1 = driver.find_element(By.ID, "user-name")
+#     username1.send_keys("standard_user")
+#     password1 = driver.find_element(By.ID, "password")
+#     password1.send_keys("secret_sauce")
+#     login_button1 = driver.find_element(By.ID, "login-button")
+#     login_button1.click()
+#     time.sleep(5)
+#     driver.quit()
+#
+#
+# import pytest
+# @pytest.mark.negative
+# def test_invalid_login():
+#     driver = webdriver.Edge()
+#     driver.get("https://saucedemo.com")
+#     username2 = driver.find_element(By.ID, "user-name")
+#     username2.send_keys("standard")
+#     password2 = driver.find_element(By.ID, "password")
+#     password2.send_keys("secret_sauce")
+#     login_button2 = driver.find_element(By.ID, "login-button")
+#     login_button2.click()
+#     error = driver.find_element(By.CLASS_NAME,"error-message-container").text
+#     assert "Epic sadface" in error
+#     time.sleep(5)
+#     driver.quit()
