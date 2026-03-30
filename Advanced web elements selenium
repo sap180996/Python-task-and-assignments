@@ -1,0 +1,32 @@
+import pytest
+from selenium import webdriver
+import time
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+
+@pytest.fixture
+def setup():
+    driver = webdriver.Edge()
+    driver.maximize_window()
+    driver.implicitly_wait(10)
+    yield driver
+    driver.quit()
+
+@pytest.mark.positive
+def test_google(setup):
+    driver = setup
+    driver.get("https://www.guvi.in")
+    print("Title of the page is: ", driver.title)
+    live_classes = driver.find_element(By.XPATH, '//*[@id="header-container"]//p[contains(text(),"LIVE Classes")]')
+    Courses = driver.find_element(By.XPATH, '//*[@id="header-container"]//p[contains(text(),"Courses")]')
+    Practice = driver.find_element(By.XPATH, '//*[@id="header-container"]//p[contains(text(),"Practice")]')
+    Resources = driver.find_element(By.XPATH, '//*[@id="header-container"]//p[contains(text(),"Resources")]')
+    Ourproducts = driver.find_element(By.XPATH, '//*[@id="header-container"]//p[contains(text(),"Our Products")]')
+    login = driver.find_element(By.XPATH, '//button[@id ="login-btn"]')
+    sign_up = driver.find_element(By.XPATH, '//*[@id="header-container"]/div[1]/div[4]/div/button[2]')
+    parent_element = driver.find_element(By.XPATH, '//button[@id ="login-btn"]/parent::div')
+    first_child_element = driver.find_element(By.XPATH, '//button[@id="login-btn"]/parent::div/child::*[1]')
+    href_element = driver.find_element(By.XPATH, '//*[@href]/parent::*')
+    ancestor_element = driver.find_element(By.XPATH, '//button[@id ="login-btn"]/ancestor::div')
+    following_sibling = driver.find_element(By.XPATH, '//button[@id ="login-btn"]/following-sibling::*')
+    preceding_element = driver.find_element(By.XPATH, '//*[@id="header-container"]//p[contains(text(),"Courses")]/preceding-sibling::*')
