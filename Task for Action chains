@@ -1,0 +1,54 @@
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.wait import WebDriverWait
+
+driver = webdriver.Edge()
+driver.maximize_window()
+driver.get("https://jqueryui.com/droppable/")
+actions = ActionChains(driver)
+wait = WebDriverWait(driver, 10)
+iframe = driver.find_element(By.TAG_NAME, "iframe")
+driver.switch_to.frame(iframe)
+drag = driver.find_element(By.ID,"draggable")
+drop = driver.find_element(By.ID,"droppable")
+actions.drag_and_drop(drop,drag).perform()
+time.sleep(5)
+print("Drag and drop completed successfully!")
+driver.quit()
+
+import pytest
+@pytest.mark.positive
+def test_positive():
+    driver = webdriver.Edge()
+    driver.maximize_window()
+    driver.get("https://jqueryui.com/droppable/")
+    actions = ActionChains(driver)
+    wait = WebDriverWait(driver, 10)
+    iframe = driver.find_element(By.TAG_NAME, "iframe")
+    driver.switch_to.frame(iframe)
+    drag = driver.find_element(By.ID,"draggable")
+    drop = driver.find_element(By.ID,"droppable")
+    actions.drag_and_drop(drop,drag).perform()
+    time.sleep(5)
+    print("Drag and drop completed successfully!")
+    driver.quit()
+
+
+import pytest
+@pytest.mark.negative
+def test_negative():
+    driver = webdriver.Edge()
+    driver.maximize_window()
+    driver.get("https://jqueryui.com/droppable/")
+    actions = ActionChains(driver)
+    wait = WebDriverWait(driver, 10)
+    iframe = driver.find_element(By.TAG_NAME, "iframe")
+    driver.switch_to.frame(iframe)
+    drag = driver.find_element(By.ID,"draggable")
+    actions.drag_and_drop_by_offset(drag,400,100).perform()
+    time.sleep(5)
+    error_msg = driver.find_element(By.XPATH,'//*[@id="droppable"]/p')
+    assert error_msg.text.strip()=="Drop here"
+    driver.quit()
