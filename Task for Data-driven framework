@@ -57,6 +57,7 @@ def test_orangehrm(setup):
             XLUtils.write_data(path, 'Sheet1', r, 5, tester_name)
             XLUtils.write_data(path, 'Sheet1', r, 6, current_time)
             driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+
 #XLUtils data
 import openpyxl
 
@@ -82,6 +83,14 @@ def write_data(file, sheet_name, row_num, column_num, data):
 
     workbook.save(file)
     workbook.close()
+
+#excel sheet updated
+Test ID	Username	Password	Result	Date and Time	Name of tester
+1	Admin	admin123	Test passed	Padmini	2026-05-24 18:49:04
+2	abc	xyz	Test failed	Padmini	2026-05-24 18:49:22
+3	test	12334	Test failed	Padmini	2026-05-24 18:49:33
+4	demo	testing	Test failed	Padmini	2026-05-24 18:49:45
+5	orange	15342	Test failed	Padmini	2026-05-24 18:49:57
 
 
 
