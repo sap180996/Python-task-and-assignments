@@ -1,0 +1,68 @@
+# pages
+from selenium import webdriver
+from selenium.common import NoSuchElementException, WebDriverException
+from selenium.webdriver.common.by import By
+import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from POMAJAXtaskfile.Locators.test_elements import Locators
+
+class dashboard:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 20)
+        self.count_pop = Locators.count_pop
+    def pop_value(self,count_pop):
+      print("Press Ctrl+c to exit")
+      try:
+         while True:
+            try:
+               element = self.driver.find_element(By.XPATH,count_pop).text
+               print(element)
+            except (NoSuchElementException,WebDriverException):
+               print("Waiting for pop")
+            time.sleep(5)
+      except KeyboardInterrupt:
+        print("Closing driver")
+# Tests
+import unittest
+import pytest
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from POMAJAXtaskfile.pages.test_dashboard import dashboard
+
+@pytest.mark.positive
+class Population_count(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome()
+        cls.driver.implicitly_wait(20)
+        cls.driver.maximize_window()
+    def test_world_count(self):
+        driver = self.driver
+        driver.get("https://www.theworldcounts.com/challenges/planet-earth/state-of-the-planet/world-population-clock-live")
+        wait = WebDriverWait(driver, 50)
+        dash_page = dashboard(driver)
+        try:
+          dash_page.pop_value(dash_page.count_pop)
+        except KeyboardInterrupt:
+            pass
+
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+
+if __name__ == "__main__":
+    unittest.main()
+# Locators
+class Locators:
+    count_pop = "//*[@id='content']/div/div/app-page/header/app-asset-title/section/div/app-counter/div/div[1]"
+
+
+
+
+
+
+
