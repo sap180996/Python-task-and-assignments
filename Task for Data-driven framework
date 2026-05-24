@@ -1,0 +1,95 @@
+#DDT code
+import pytest
+from selenium import webdriver
+from selenium.common import NoSuchElementException, TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.ie.webdriver import WebDriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from datetime import datetime
+import XLUtils
+
+@pytest.fixture
+def setup():
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+    driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+    yield driver
+    driver.quit()
+
+def test_orangehrm(setup):
+    driver = setup
+    tester_name ="Padmini"
+    path = "C:/Users/Padmini/Desktop/DDTtestdata.xlsx"
+    rows = XLUtils.get_row_count(path, 'Sheet1')
+    wait = WebDriverWait(driver, 10)
+    for r in range(2,rows+1):
+        username = XLUtils.read_data(path,'Sheet1',r,2)
+        password = XLUtils.read_data(path,'Sheet1',r,3)
+
+        try:
+            user_field= wait.until(EC.presence_of_element_located((By.NAME,'username')))
+            user_field.clear()
+            user_field.send_keys(username)
+            pass_field = driver.find_element(By.NAME,'password')
+            pass_field.clear()
+            pass_field.send_keys(password)
+            driver.find_element(By.XPATH,"//button[normalize-space()='Login']").click()
+            wait.until(EC.presence_of_element_located((By.XPATH,"//p[@class='oxd-userdropdown-name']")))
+            print("Test case passed")
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            XLUtils.write_data(path,'Sheet1',r,4,'Test passed')
+            XLUtils.write_data(path, 'Sheet1', r, 5, tester_name)
+            XLUtils.write_data(path, 'Sheet1', r, 6, current_time)
+            driver.find_element(By.XPATH,"//p[@class='oxd-userdropdown-name']").click()
+            wait.until(EC.element_to_be_clickable((By.XPATH,"//a[normalize-space()='Logout']"))).click()
+        except (NoSuchElementException,TimeoutException):
+            print("Test case failed")
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            XLUtils.write_data(path,'Sheet1',r,4,'Test failed')
+            XLUtils.write_data(path, 'Sheet1', r, 5, tester_name)
+            XLUtils.write_data(path, 'Sheet1', r, 6, current_time)
+            driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+        except Exception as e:
+            print(f"Login failed:{e}")
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            XLUtils.write_data(path,'Sheet1',r,4,'Test failed')
+            XLUtils.write_data(path, 'Sheet1', r, 5, tester_name)
+            XLUtils.write_data(path, 'Sheet1', r, 6, current_time)
+            driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+#XLUtils data
+import openpyxl
+
+def get_row_count(file, sheet_name):
+    workbook = openpyxl.load_workbook(file)
+    sheet = workbook[sheet_name]
+    return sheet.max_row
+
+def get_column_count(file, sheet_name):
+    workbook = openpyxl.load_workbook(file)
+    sheet = workbook[sheet_name]
+    return sheet.max_column
+
+def read_data(file, sheet_name, row_num, column_num):
+    workbook = openpyxl.load_workbook(file)
+    sheet = workbook[sheet_name]
+    return sheet.cell(row=row_num, column=column_num).value
+
+def write_data(file, sheet_name, row_num, column_num, data):
+    workbook = openpyxl.load_workbook(file)
+    sheet = workbook[sheet_name]
+    sheet.cell(row=row_num, column=column_num, value=data)
+
+    workbook.save(file)
+    workbook.close()
+
+
+
+
+
+
+
+
+
+
+
