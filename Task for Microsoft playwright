@@ -1,0 +1,32 @@
+import time
+
+from playwright.sync_api import Page, expect
+
+def test_valid_login(page: Page):
+    page.goto("https://v2.zenclass.in/login")
+    page.get_by_placeholder("Enter your mail").fill("sap180996@gmail.com")
+    page.get_by_placeholder("Enter your password").fill("Padmini@123")
+    page.locator("button[type='submit']").click()
+    page.wait_for_url("https://v2.zenclass.in/dashboard", timeout=15000)
+    page.wait_for_load_state("networkidle")
+    try:
+        popup_close_btn = page.get_by_role("button", name="Close popup")
+        popup_close_btn.wait_for(state="visible", timeout=5000)
+        popup_close_btn.click()
+    except Exception:
+        print("Popup did not appear, proceeding with test.")
+    profile_icon = page.locator("#profile-click-icon")
+    expect(profile_icon).to_be_visible(timeout=10000)
+    profile_icon.click()
+    log_out_btn = page.get_by_text("Log out")
+    expect(log_out_btn).to_be_visible(timeout=5000)
+    log_out_btn.click()
+
+def test_invalid_login(page: Page):
+    page.goto("https://v2.zenclass.in/login")
+    page.get_by_placeholder("Enter your mail").fill("sap180996@gmail.com")
+    page.get_by_placeholder("Enter your password").fill("Padmini")
+    page.locator("button[type='submit']").click()
+    expect(page).to_have_url("https://v2.zenclass.in/login")
+    error_message = page.get_by_text("*Incorrect password!", exact=False)
+    expect(error_message).to_be_visible(timeout=5000)
