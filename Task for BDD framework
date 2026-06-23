@@ -1,0 +1,184 @@
+feature file:
+Feature: Login to zen portal
+  As a registered user
+  I want to log in and log out of the zen portal application
+  So that I can see and secure my course progress
+
+  Background:
+    Given the user is on the zen portal login page
+
+ @smoke @login
+  Scenario Outline: Successful login and logout
+    When the user logs in with username "<username>" and password "<password>"
+    Then the user should be redirected to the dashboard page
+    When the user clicks on the logout button
+    Then the user should be redirected back to the login page
+
+    Examples: Valid user
+      | username            | password    |
+      | sap180996@gmail.com | Padmini@123 |
+
+  @regression @login @negative
+  Scenario Outline: Login attempts with different user types
+    When the user logs in with username "<username>" and password "<password>"
+    Then the login result should be "<expected_result>"
+
+    Examples: Invalid user types
+      | username            | password | expected_result |
+      | sap180996@gmail.com | Padmini  | Invalid         |
+
+pages:
+loginpage:
+"""
+login_page.py
+Page Object for https://v2.zenclass.in/ (login screen).
+"""
+from selenium.webdriver.common.by import By
+from pages.base_page import BasePage
+
+BASE_URL = "https://v2.zenclass.in/"
+
+
+class LoginPage(BasePage):
+    USERNAME_INPUT = (By.XPATH, '//*[@id=":r1:"]')
+    PASSWORD_INPUT = (By.XPATH, '//*[@id=":r2:"]')
+    LOGIN_BUTTON = (By.XPATH, '//*[@id="root"]/div[2]/div/div/div[2]/div/div/div[3]/div/div/form/div[4]/button')
+    ERROR_MESSAGE = (By.XPATH, '//*[@id=":r2:-helper-text"]')
+
+    def load(self):
+        self.open(BASE_URL)
+
+    def login(self, username, password):
+        self.type_text(self.USERNAME_INPUT, username)
+        self.type_text(self.PASSWORD_INPUT, password)
+        self.click(self.LOGIN_BUTTON)
+
+    def get_error_message(self):
+        return self.get_text(self.ERROR_MESSAGE)
+
+    def is_error_displayed(self):
+        return self.is_visible(self.ERROR_MESSAGE, timeout=3)
+dashboard page:
+"""
+dashboard_page.py
+Page Object for https://v2.zenclass.in/ (Dashboard screen with logout functionality).
+"""
+from selenium.webdriver.common.by import By
+from pages.base_page import BasePage
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
+class DashboardPage(BasePage):
+    MODAL_CLOSE_BUTTON = (By.XPATH,
+                          "//button[contains(@class, 'close')] | //*[local-name()='svg' and @data-testid='CloseIcon']/..")
+    MUI_BACKDROP = (By.CLASS_NAME, "MuiBackdrop-root")
+
+
+    USER_MENU_DROPDOWN = (By.CSS_SELECTOR, ".profile-click-icon-div")
+    LOGOUT_BUTTON = (By.XPATH, '//*[@id="root"]/div[2]/div[2]/div[1]/div/div[2]/div[2]/div[2]/div[4]')
+
+    def is_dashboard_visible(self):
+        try:
+            # Notice we use 'self.driver' here, NOT context.driver
+            WebDriverWait(self.driver, 15).until(
+                EC.visibility_of_element_located(self.USER_MENU_DROPDOWN)
+            )
+            return True
+        except:
+            return False
+
+    def click_user_menu(self):
+        element = self.find_clickable(self.USER_MENU_DROPDOWN)
+        self.driver.execute_script("arguments[0].click();", element)
+
+    def click_logout(self):
+        element = self.find_clickable(self.LOGOUT_BUTTON)
+        self.driver.execute_script("arguments[0].click();", element)
+
+    def logout(self):
+        self.click_user_menu()
+        self.click_logout()
+
+    class BasePage:
+        MUI_BACKDROP = (By.CLASS_NAME, "MuiBackdrop-root")
+
+        def wait_for_overlay_to_disappear(self, timeout=10):
+            try:
+                WebDriverWait(self.driver, timeout).until(
+                    EC.invisibilityOfElementLocated(self.MUI_BACKDROP)
+                )
+            except Exception:
+                pass
+
+    def handle_announcement_modal(self):
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.visibility_of_element_located(self.MODAL_CLOSE_BUTTON)
+            )
+            self.click(self.MODAL_CLOSE_BUTTON)
+
+            WebDriverWait(self.driver, 5).until(
+                EC.invisibility_of_element_located(self.MUI_BACKDROP)
+            )
+        except Exception:
+            print("No modal overlay detected. Proceeding...")
+steps:
+loginsteps:
+from behave import given, when, then
+from pages.login_page import LoginPage
+from pages.Dashboard import DashboardPage
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+@given('the user is on the zen portal login page')
+def step_impl(context):
+    context.login_page = LoginPage(context.driver)
+    context.login_page.load()
+
+@when('the user logs in with username "{username}" and password "{password}"')
+def step_impl(context, username, password):
+    context.login_page.login(username, password)
+
+
+@then('the user should be redirected to the dashboard page')
+def step_impl(context):
+    context.dashboard_page = DashboardPage(context.driver)
+    assert context.dashboard_page.is_dashboard_visible(), "Dashboard profile menu did not appear!"
+
+@when('the user clicks on the logout button')
+def step_impl(context):
+    context.dashboard_page.logout()
+
+@then('the user should be redirected back to the login page')
+def step_impl(context):
+    assert context.login_page.is_visible(context.login_page.USERNAME_INPUT), "Not redirected back to the login page!"
+
+@then('the login result should be "{expected_result}"')
+def step_impl(context, expected_result):
+    if expected_result == "Invalid":
+        assert context.login_page.is_error_displayed(), "Expected login error message but none appeared!"
+
+behave init file:
+[behave]
+paths = features/login.feature
+
+default_format = pretty
+show_skipped = false
+show_timings = true
+junit = true
+junit_directory = reports/junit
+
+[behave.formatters]
+allure = allure_behave.formatter:AllureFormatter
+html = behave_html_formatter:HTMLFormatter
+
+
+
+
+
+
+
+
+
+
