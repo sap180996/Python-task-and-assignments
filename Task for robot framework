@@ -1,0 +1,19 @@
+*** Settings ***
+Library    SeleniumLibrary
+*** Variables ***
+${browser}    chrome
+${url}    https://robotsparebinindustries.com/
+*** Test Cases ***
+LoginTest
+    Open Browser    ${url}    ${browser}
+    Maximize Browser Window
+    LoginApplication
+    Close Browser
+
+*** Keywords ***
+LoginApplication
+    Input Text    id:username    maria
+    Input Text    id:password    thoushallnotpass
+    Click Element    xpath://*[@id="root"]/div/div/div/div[1]/form/button
+    Wait Until Element Is Visible    xpath://*[@id="logout"]
+    Click Element    xpath://*[@id="logout"]
