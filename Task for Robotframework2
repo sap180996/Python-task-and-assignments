@@ -1,0 +1,59 @@
+*** Settings ***
+Library    SeleniumLibrary
+*** Variables ***
+${browser}    chrome
+${url}    https://www.saucedemo.com/
+*** Test Cases ***
+LoginTest1
+    Open Browser    ${url}    ${browser}
+    Maximize Browser Window
+    LoginValid
+    Close Browser
+
+LoginTest2
+    Open Browser    ${url}    ${browser}
+    Maximize Browser Window
+    LoginInvalid
+    Close Browser
+
+LoginTest3
+    Open Browser    ${url}    ${browser}
+    Maximize Browser Window
+    LoginValid
+    AddingCart
+    Close Browser
+
+LoginTest4
+    Open Browser    ${url}    ${browser}
+    Maximize Browser Window
+    LoginValid
+    Checkout
+    Close Browser
+
+*** Keywords ***
+LoginValid
+    Input Text    id:user-name    standard_user
+    Input Text    id:password    secret_sauce
+    Click Element    id:login-button
+
+LoginInvalid
+    Input Text    id:user-name    standard
+    Input Text    id:password    secret
+    Click Element    id:login-button
+    Wait Until Element Contains    xpath://*[@id="login_button_container"]/div/form/div[3]/h3    Epic sadface: Username and password do not match any user in this service
+    
+AddingCart
+    Click Element    id:add-to-cart-sauce-labs-backpack
+    Click Element    id:shopping_cart_container
+    Wait Until Element Is Visible    xpath://*[@id="item_4_title_link"]/div
+
+Checkout
+    Click Element    id:add-to-cart-sauce-labs-backpack
+    Click Element    id:add-to-cart-sauce-labs-bolt-t-shirt
+    Click Element    id:add-to-cart-sauce-labs-bike-light
+    Click Element    id:shopping_cart_container
+    Click Element    id:checkout
+    Input Text    id:first-name    standard
+    Input Text    id:last-name    user
+    Input Text    id:postal-code    631209
+    Click Element    id:continue
